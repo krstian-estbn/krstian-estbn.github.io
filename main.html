@@ -71,8 +71,7 @@ const evilButton = document.getElementById('evil-button')
 const OFFSET = 100
 
 evilButton.addEventListener('click', () => {
-  alert('Nice Try')
-  window.close()
+  document.getElementById('pText').innerHTML = "WALANG NO!"
 })
 
 document.addEventListener('mousemove', (e) => {
