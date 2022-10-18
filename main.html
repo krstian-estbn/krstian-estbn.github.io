@@ -8,7 +8,7 @@
 </head>
 <link href="https://fonts.googleapis.com/css?family=Bebas%20Neue" rel="stylesheet" type="text/css"/>
 <body>
-  <p id="pText" class="question">PAYAG KA CRUSH KITA?</p>
+  <p id="pText" class="question">PAYAG KA CRUSH KITA 🤨</p>
   <input type="button" value="YES" id="b1" onclick="changeText(this.value)" class="button1"></input>
   <button class="button2" id='evil-button'>NO</button>
 </body>
@@ -37,9 +37,9 @@ body {
   position: relative;
 }
 .button1 {
-  position: relative;
-  top: 35%;
-  left: 40%;
+  position: absolute;
+  top: 60%;
+  left: 35%;
   transform: translate(-50%, -50%);
   height: 4rem;
   width: 10rem;
@@ -50,9 +50,9 @@ body {
   background-color: white;
 }
 .button2 {
-  position: relative;
-  top: 35%;
-  left: 50%;
+  position: absolute;
+  top: 60%;
+  left: 60%;
   transform: translate(-50%, -50%);
   height: 4rem;
   width: 10rem;
@@ -65,7 +65,7 @@ body {
 </style>
 <script>
 function changeText(b1) {
-  document.getElementById('pText').innerHTML = "DI MO LANG MAPINDOT ANG NO...";
+  document.getElementById('pText').innerHTML = "DI MO LANG MAPINDOT 🥱";
 }
 const evilButton = document.getElementById('evil-button')
 const OFFSET = 100
