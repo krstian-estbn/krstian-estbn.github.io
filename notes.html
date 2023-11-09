@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <p id="textParagraph">Loading...</p>
+
+    <script>
+        // Assuming you are using JavaScript to embed text
+        fetch('example.txt')
+            .then(response => response.text())
+            .then(text => {
+                // Embedding the text into the paragraph with the id "textParagraph"
+                document.getElementById('textParagraph').textContent = text;
+            })
+            .catch(error => console.error('Error fetching the text:', error));
+    </script>
+</body>
+</html>
