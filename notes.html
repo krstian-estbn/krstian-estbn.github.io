@@ -13,7 +13,12 @@
             var selectedNote = document.getElementById('noteSelector').value;
 
             fetch(selectedNote)
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('File not found');
+                    }
+                    return response.text();
+                })
                 .then(text => {
                     document.getElementById('textPre').textContent = text;
                 })
