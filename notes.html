@@ -9,7 +9,7 @@
             .then(response => response.text())
             .then(text => {
                 // Embedding the text into the paragraph with the id "textParagraph"
-                document.getElementById('textParagraph').textContent = text;
+                document.getElementById('textPre').textContent = text;
             })
             .catch(error => console.error('Error fetching the text:', error));
     </script>
