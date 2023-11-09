@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <pre id="textParagraph">Loading...</pre>
+    <label for="noteSelector">Select a Notes:</label>
+    <select id="noteSelector" onchange="loadSelectedNote()">
+        <option value="example.txt">Meiosis</option>
+        <option value="note2.txt">Note 2</option>
+    </select>
+    <pre id="textParagraph"></pre>
 
     <script>
-        // Assuming you are using JavaScript to embed text
-        fetch('example.txt')
-            .then(response => response.text())
-            .then(text => {
-                // Embedding the text into the paragraph with the id "textParagraph"
-                document.getElementById('textPre').textContent = text;
-            })
-            .catch(error => console.error('Error fetching the text:', error));
+        function loadSelectedNote() {
+            var selectedNote = document.getElementById('noteSelector').value;
+
+            fetch(selectedNote)
+                .then(response => response.text())
+                .then(text => {
+                    document.getElementById('textPre').textContent = text;
+                })
+                .catch(error => console.error('Error fetching the text:', error));
+        }
+
+        loadSelectedNote();
     </script>
 </body>
 </html>
