@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <label for="categorySelector">Select a Subject:</label>
+    <select id="categorySelector" onchange="loadCategory()">
+        <option value="gen bio">Gen Bio</option>
+        <option value="iphp">IPHP</option>
+    </select>
+
+    <label for="noteSelector">Select a Note:</label>
+    <select id="noteSelector" onchange="loadSelectedNote()">
+
+        <optgroup label="Gen Bio">
+            <option value="https://docs.google.com/document/d/e/2PACX-1vREM_Z8LVctJQFZWiIC0MHUmlVYh9Lz-Z4B_VyK-_wzZ9WQWQwL0SKnZ1v-WNV4jl2lqnX9G4Ru63J4/pub?embedded=true">Meiosis</option>
+        </optgroup>
+
+        <optgroup label="IPHP">
+            <option value="https://docs.google.com/document/d/e/2PACX-1vRCg8tatd7rbGO-dRgDlKruXWHlOdQ0QB2HgIyuUa8B-0PCupjER7MR_r04oPNoGIzvqoqI8ffRkwY6/pub?embedded=true">Metaphysical Dichotomy</option>
+            <option value="https://docs.google.com/document/d/e/2PACX-1vRsnQJKwo-iUn6HyXT6IjcaZU36JUSmFpNDCXzmVU-xIneS9hf7-GnHoiWqGQDI-j-dfiGIZ9I_bpsW/pub?embedded=true">Embodied Spirit</option>
+            <option value="https://docs.google.com/document/d/e/2PACX-1vSXxE7a8Uzek1IVo6IrX54XCUXmxyBvKZNXr7AHfUeLdWaT8GWjHP7dg-hcndg2EcFHvGH0AQ5bLNbA/pub?embedded=true">Environmental Philosophy</option>
+        </optgroup>
+    </select>
+
+    <br><br>
+    <iframe id="docFrame" src="" width="100%" height="660px"></iframe>
+
+    <script>
+        function loadSelectedNote() {
+            var selectedNote = document.getElementById('noteSelector').value;
+            document.getElementById('docFrame').src = selectedNote;
+        }
+
+        function loadCategory() {
+            var selectedCategory = document.getElementById('categorySelector').value;
+            var noteSelector = document.getElementById('noteSelector');
+            noteSelector.innerHTML = '';
+
+            if (selectedCategory === 'gen bio') {
+                noteSelector.innerHTML += '<optgroup label="Gen Bio">';
+                noteSelector.innerHTML += '<option value="https://docs.google.com/document/d/e/2PACX-1vREM_Z8LVctJQFZWiIC0MHUmlVYh9Lz-Z4B_VyK-_wzZ9WQWQwL0SKnZ1v-WNV4jl2lqnX9G4Ru63J4/pub?embedded=true">Meiosis</option>';
+                noteSelector.innerHTML += '</optgroup>';
+            } else if (selectedCategory === 'iphp') {
+                noteSelector.innerHTML += '<optgroup label="IPHP">';
+                noteSelector.innerHTML += '<option value="https://docs.google.com/document/d/e/2PACX-1vRCg8tatd7rbGO-dRgDlKruXWHlOdQ0QB2HgIyuUa8B-0PCupjER7MR_r04oPNoGIzvqoqI8ffRkwY6/pub?embedded=true">Metaphysical Dichotomy</option>';
+                noteSelector.innerHTML += '<option value="https://docs.google.com/document/d/e/2PACX-1vRsnQJKwo-iUn6HyXT6IjcaZU36JUSmFpNDCXzmVU-xIneS9hf7-GnHoiWqGQDI-j-dfiGIZ9I_bpsW/pub?embedded=true">Embodied Spirit</option>'
+                noteSelector.innerHTML += '<option value="https://docs.google.com/document/d/e/2PACX-1vSXxE7a8Uzek1IVo6IrX54XCUXmxyBvKZNXr7AHfUeLdWaT8GWjHP7dg-hcndg2EcFHvGH0AQ5bLNbA/pub?embedded=true">Environmental Philosophy</option>'
+                noteSelector.innerHTML += '</optgroup>';
+            }
+            
+            // Load the selected note after updating the dropdown
+            loadSelectedNote();
+        }
+
+        // Load default values
+        loadCategory();
+    </script>
+</body>
+</html>
