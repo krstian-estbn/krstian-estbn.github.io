@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>shanny</title>
+    </head>
+    
+    <body class="color">
+    
+    <style>
+        .color {
+            background-color: #EBF5FF;
+        }
+        .space { 
+            margin-top:310px; 
+        }
+        .button {
+            text-align: center;
+            padding: 20px;
+            transition: all 0.5s;
+            cursor: pointer;
+            font-size: 2.2em;
+            background-color: #EBF5FF;
+            border: 2px solid black;
+            box-shadow: 4px 4px 4px #999999;
+            margin:auto;
+            display:block;
+            position:relative;
+            z-index:9999;
+        }
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+        .button:hover span {
+            padding-right: 25px;
+        }
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+    </style>
+
+    <div class="space">
+        <div id="tsparticles">
+            <button class="button" onclick="betlog()">
+                <span>Press Me</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    <script>
+        function betlog(){
+            const defaults = {
+                spread: 400,
+                ticks: 200,
+                gravity: 0,
+                decay: 0.94,
+                startVelocity: 50,
+            };
+
+            function shoot() {
+            confetti({
+                ...defaults,
+                particleCount: 60,
+                scalar: 4.2,
+                shapes: ["emoji"],
+                shapeOptions: {
+                emoji: {
+                    value: ["🦄"],
+                },
+                },
+            });
+            }
+
+            setTimeout(shoot, 0);
+            setTimeout(shoot, 100);
+            setTimeout(shoot, 200);
+        }
+    </script>
+
+    </body>
+</html>
