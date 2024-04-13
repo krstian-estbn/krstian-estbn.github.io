@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>🦄</title>
+    </head>
+    
+    <body class="color">
+    
+    <style>
+        .color {
+            background-color: #EBF5FF;
+        }
+        .space { 
+            margin-top:315px; 
+        }
+        .button {
+            margin:auto;
+            display:block;
+            position:relative;
+            z-index:9999;
+            padding: 20px;
+
+            transition: all 0.1s ease-in;
+            
+            cursor: pointer;
+            
+            text-align: center;
+            font-size: 2.2em;
+            
+            border-radius: 20px;
+            background-color: #EBF5FF;
+            filter: drop-shadow(0 7px 0 #15111a);
+        }
+        .press:active {
+            filter: drop-shadow(0 0 0 #15111a);
+            transform: translate(0, 10px);
+        }
+    </style>
+
+    <div class="space">
+        <div id="tsparticles">
+            <button class="button press" onclick="betlog()">
+                <span>Press Me</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    <script>
+        function betlog() {
+            const defaults = {
+                spread: 300,
+                ticks: 200,
+                gravity: 0.5,
+                decay: 0.94,
+                startVelocity: 40,
+            };
+
+            function shoot() {
+            confetti({
+                ...defaults,
+                particleCount: 60,
+                scalar: 5,
+                shapes: ["emoji"],
+                shapeOptions: {
+                emoji: {
+                    value: ["🦄", "🌈", "💜", "🌟"],
+                },
+                },
+            });
+            }
+
+            setTimeout(shoot, 10);
+        }
+    </script>
+    <script>
+        function changeText(el, texts, currentIndex) {
+            currentIndex = (currentIndex + 1) % texts.length;
+  
+            if ('textContent' in document.body) {
+                el.textContent = texts[currentIndex];
+            } else {
+                el.firstChild.nodeValue = texts[currentIndex];
+            }
+
+           return currentIndex;
+        }
+
+        var textList,
+            btn,
+            currentIndex;
+
+        textList = ['Hello', 'UNICORN!', 'RAHHH', 'When BORED', 'Press Lang', 'BTW', 'Cute si ANO', 'haha', '>~<', 'joke...', 'Anyways', 'Press Uli'];
+        currentIndex = -1;
+        btn = document.querySelector('.button');
+
+        btn.addEventListener('click', function() {
+            currentIndex = changeText(this, textList, currentIndex);
+        }, false);
+    </script>
+
+    </body>
+</html>
