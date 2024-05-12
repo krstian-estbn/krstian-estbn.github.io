@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Flower Garden</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="text"></div>
+    </div>
+    <div id="flowerGarden"></div>
+    <script>
+        const flowerGarden = document.getElementById('flowerGarden');
+
+        function generateFlower() {
+            const flowers = ['@}-,-\'--', '@->-->---', '@-}-;---', '@}-;--', '@}-;----', '@};---', '@},---', '@},-', '@}-'];
+            return flowers[Math.floor(Math.random() * flowers.length)]
+                .split('')
+                .map(char => `<span class="char">${char}</span>`)
+                .join('');
+        }
+
+        function getRandomColor() {
+            const baseHue = Math.random() > 0.5 ? 330 : 240; // Hot pink or blue
+            return `hsl(${baseHue}, 100%, 50%)`; // Fixed saturation and lightness for visibility
+        }
+
+        function animateFlower(flower) {
+            flower.childNodes.forEach((char, index) => {
+                char.style.display = 'inline-block'; // Necessary for transform
+                char.style.animation = `dance 2s ease-in-out ${index * 0.05}s infinite, fadeOut 2s ease-in-out ${2 + index * 0.05}s forwards`;
+            });
+
+            // Remove the flower after the last character fades out
+            setTimeout(() => {
+                flower.remove();
+            }, 10000);
+        }
+
+        flowerGarden.addEventListener('click', function(event) {
+            const x = event.clientX;
+            const y = event.clientY;
+
+            const flower = document.createElement('div');
+            flower.classList.add('flower');
+            flower.style.left = `${x}px`;
+            flower.style.top = `${y}px`;
+            flower.innerHTML = generateFlower();
+            flower.style.color = getRandomColor();
+            flowerGarden.appendChild(flower);
+
+            animateFlower(flower);
+        });
+
+    </script>
+    <script>
+        class TextScramble {
+        constructor(el) {
+            this.el = el
+            this.chars = '!<>-_\\/[]{}—=+*^?#________'
+            this.update = this.update.bind(this)
+        }
+        setText(newText) {
+            const oldText = this.el.innerText
+            const length = Math.max(oldText.length, newText.length)
+            const promise = new Promise((resolve) => this.resolve = resolve)
+            this.queue = []
+            for (let i = 0; i < length; i++) {
+            const from = oldText[i] || ''
+            const to = newText[i] || ''
+            const start = Math.floor(Math.random() * 40)
+            const end = start + Math.floor(Math.random() * 40)
+            this.queue.push({ from, to, start, end })
+            }
+            cancelAnimationFrame(this.frameRequest)
+            this.frame = 0
+            this.update()
+            return promise
+        }
+        update() {
+            let output = ''
+            let complete = 0
+            for (let i = 0, n = this.queue.length; i < n; i++) {
+            let { from, to, start, end, char } = this.queue[i]
+            if (this.frame >= end) {
+                complete++
+                output += to
+            } else if (this.frame >= start) {
+                if (!char || Math.random() < 0.28) {
+                char = this.randomChar()
+                this.queue[i].char = char
+                }
+                output += `<span class="dud">${char}</span>`
+            } else {
+                output += from
+            }
+            }
+            this.el.innerHTML = output
+            if (complete === this.queue.length) {
+            this.resolve()
+            } else {
+            this.frameRequest = requestAnimationFrame(this.update)
+            this.frame++
+            }
+        }
+        randomChar() {
+            return this.chars[Math.floor(Math.random() * this.chars.length)]
+        }
+        }
+
+        const phrases = [
+        'hi',
+        'musta',
+        ''
+        ]
+
+        const el = document.querySelector('.text')
+        const fx = new TextScramble(el)
+
+        let counter = 0
+        const next = () => {
+        fx.setText(phrases[counter]).then(() => {
+            setTimeout(next, 1500)
+        })
+        counter = (counter + 1) % phrases.length
+        }
+
+        next()
+    </script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            user-select: none;
+        }
+
+        #flowerGarden {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .flower {
+            position: absolute;
+            white-space: pre;
+            font-family: monospace;
+            font-size: 30px;
+            cursor: pointer;
+            user-select: none;
+            transform: rotate(90deg); /* Rotate the entire flower */
+            transform-origin: center; /* Ensure rotation is around the center */
+        }
+
+        .char {
+            display: inline-block;
+            animation: dance 2s ease-in-out infinite, fadeOut 2s ease-in-out forwards;
+        }
+
+        @keyframes dance {
+            0%, 100% {
+                transform: translateY(-10px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        .text {
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 100;
+            font-size: 28px;
+            color: #000000;
+            position: absolute;
+            width: 100%;
+            display: inline-block;
+            text-align: center;
+            z-index: 1;
+
+        }
+        .container {
+            position: absolute;
+            margin: auto;
+            width: 100vw;
+            height: 80pt;
+            top: 0;
+            bottom: 0;
+        }
+
+    </style>
+</body>
+</html>
