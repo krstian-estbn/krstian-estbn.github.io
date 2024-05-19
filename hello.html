@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Glottophobia sa Asento ng Wikang Banyaga ayon sa Sikolohiyang Pilipino</title>
+    </head>
+    
+    <body>
+        <iframe class="fake-ahh"
+        src="https://docs.google.com/forms/d/e/1FAIpQLScOxOuvpz8wrn6dSB-hoL4vkDtrERZdAkfBwjDknT-FlX2wdg/viewform?embedded=true"
+        width="100%"
+        height="1400px"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        scrolling="no">
+        Loading…</iframe>
+        
+        <div class="container">
+        <div class="text"></div>
+    
+    <style>
+        body {
+        font-family: 'Roboto Mono', monospace;
+        height: 100%;
+        margin: 0px;
+        }
+            
+        .text {
+        font-weight: 80;
+        font-size: 28px;
+        color: #212121;
+        position: absolute;
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+        }
+        
+        .container {
+        position: absolute;
+        margin: auto;
+        width: 100vw;
+        height: 80pt;
+        top: 0;
+        bottom: 0;
+        z-index: -1;
+        top: 0;
+        }
+    </style>
+
+    <script>
+        var element = document.querySelector('.fake-ahh'); 
+        function fadeOut(el) {
+            var opacity = 1; // Initial opacity
+            var interval = setInterval(function() {
+                if (opacity > 0) {
+                    opacity -= 1;
+                    el.style.opacity = opacity;
+                } else {
+                    clearInterval(interval);
+                    el.style.display = 'none';
+                }
+            }, 7000);
+         }
+         fadeOut(element);
+    </script>
+
+    <script>
+        class TextScramble {
+        constructor(el) {
+            this.el = el
+            this.chars = '!<>-_\\/[]{}—=+*^?#________'
+            this.update = this.update.bind(this)
+        }
+        setText(newText) {
+            const oldText = this.el.innerText
+            const length = Math.max(oldText.length, newText.length)
+            const promise = new Promise((resolve) => this.resolve = resolve)
+            this.queue = []
+            for (let i = 0; i < length; i++) {
+            const from = oldText[i] || ''
+            const to = newText[i] || ''
+            const start = Math.floor(Math.random() * 40)
+            const end = start + Math.floor(Math.random() * 40)
+            this.queue.push({ from, to, start, end })
+            }
+            cancelAnimationFrame(this.frameRequest)
+            this.frame = 0
+            this.update()
+            return promise
+        }
+        update() {
+            let output = ''
+            let complete = 0
+            for (let i = 0, n = this.queue.length; i < n; i++) {
+            let { from, to, start, end, char } = this.queue[i]
+            if (this.frame >= end) {
+                complete++
+                output += to
+            } else if (this.frame >= start) {
+                if (!char || Math.random() < 0.28) {
+                char = this.randomChar()
+                this.queue[i].char = char
+                }
+                output += `<span class="dud">${char}</span>`
+            } else {
+                output += from
+            }
+            }
+            this.el.innerHTML = output
+            if (complete === this.queue.length) {
+            this.resolve()
+            } else {
+            this.frameRequest = requestAnimationFrame(this.update)
+            this.frame++
+            }
+        }
+        randomChar() {
+            return this.chars[Math.floor(Math.random() * this.chars.length)]
+        }
+        }
+
+        const phrases = [
+        '',
+        '',
+        '',
+        '',
+        '',
+        '*_#[_-^<_\_>]=\!—__/__+?_}{',
+        'hello po',
+        'musta??',
+        'maangas ba survey?',
+        'tbh di ko alam ano ginagawa ko',
+        'halata naman ako noh?',
+        'sobrang halata dati pa...',
+        'na gusto kita',
+        'WHATTTTTT',
+        'weh??',
+        'GUSTO KITA?',
+        'opo',
+        ':))',
+        'bat kasi ang ganda mo',
+        'lalo na ung pamatay mong ngiti',
+        'natatanggal tuloy angas ko',
+        'lalo pag nagrerecite',
+        'jkjk',
+        'idk kasi pano sabihin sayo',
+        'kaya dinaan ko nalang dito',
+        'un lang naman',
+        'happy bakasyon',
+        'kahit isang buwan lang',
+        'and goodluck sa UPCAT grind!',
+        'see u next sy!'
+        ]
+
+        const el = document.querySelector('.text')
+        const fx = new TextScramble(el)
+
+        let counter = 0
+        const next = () => {
+        fx.setText(phrases[counter]).then(() => {
+            setTimeout(next, 1500)
+        })
+        counter = (counter + 1) % phrases.length
+        }
+
+        next()
+    </script>
+    </body>
+</html>
