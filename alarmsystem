@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>😳</title>
+    <link href="https://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise" rel="stylesheet" type="text/css"/>
+<style>
+    body {
+        font-family: sans-serif;
+        background: white;
+        color: #333;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .time {
+        font-family: 'Courier Prime', monospace;
+        font-size: 4rem;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+        padding: 20px;
+        border-radius: 5px;
+        border: 5px solid black;
+        border-color: black;
+        display: inline-block;
+    }
+    .greeting {
+        font-family: 'Courier Prime', monospace;
+        font-size: 2rem;
+        margin-top: 20px;
+        font-weight: normal;
+    }
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="greeting"></div>
+        <div class="time"></div>
+    </div>
+    <script>
+        function updateMessage() {
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const date = new Date();
+            const day = date.getDay();
+            const hour = date.getHours();
+            const minute = date.getMinutes();
+            const second = date.getSeconds();
+            let message;
+
+            const schedules = {
+                1: [
+                    ["FREE PERIOD", 7, 8],
+                    ["CPAR", 8, 10],
+                    ["21st CENTURY", 10, 11],
+                    ["BREAK TIME", 11, 12],
+                    ["PFPL", 12, 13],
+                    ["GEN PHY", 13, 14],
+                ],
+                2: [
+                    ["FREE PERIOD", 7, 8],
+                    ["HOPE", 8, 9],
+                    ["PR 1", 9, 10],
+                    ["PFPL", 10, 11],
+                    ["BREAK TIME", 11, 12],
+                    ["21st CENTURY", 12, 13],
+                    ["PR 2", 13, 14],
+                    ["GEN CHEM", 14, 15]
+                ],
+                3: [
+                    ["PR 1", 7, 8],
+                    ["CPAR", 8, 9],
+                    ["21st CENTURY", 9, 10],
+                    ["PFPL", 10, 11],
+                    ["BREAK TIME", 11, 12],
+                    ["GEN PHY", 12, 13],
+                    ["PR 2", 13, 14],
+                ],
+                5: [
+                    ["PR 1", 7, 8],
+                    ["CPAR", 8, 9],
+                    ["21st CENTURY", 9, 10],
+                    ["PFPL", 10, 11],
+                    ["BREAK TIME", 11, 12],
+                    ["GEN PHY", 12, 13],
+                    ["PR 2", 13, 14],
+                    ["GEN CHEM", 14, 15]
+                ]
+            };
+
+            if (day === 0 || day === 6) {
+                message = "WEEKEND NA RAHHH";
+            } else if (day === 4) {
+                message = "RESEARCH (REST) DAY";
+            } else if (day in schedules) {
+                if (hour < 7) {
+                    message = "MAMAYA PA KLASE";
+                } else {
+                    let subject = "TAPOS NA KLASE";
+                    for (const [schedSubject, startHour, endHour] of schedules[day]) {
+                        if (hour === startHour && minute >= 0 || hour === endHour - 1 && minute < 60) {
+                            subject = schedSubject;
+                            break;
+                        }
+                    }
+                    message = subject;
+                }
+            } else {
+                message = "TAPOS NA KLASE";
+            }
+
+            document.querySelector('.greeting').innerHTML = message;
+
+            const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+            document.querySelector('.time').innerHTML = timeString;
+        }
+
+        setInterval(updateMessage, 1000); // Update every second
+        updateMessage(); // Initial call
+    </script>
+</body>
+</html>
