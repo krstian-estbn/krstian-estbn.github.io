@@ -11,7 +11,7 @@
     <select id="noteSelector" onchange="loadSelectedNote()">
 
         <optgroup label="LIT">
-            <option value="">REVIEWER (SOON)</option>
+            <option value="https://docs.google.com/document/d/1g3Q3HS0nRw3rADV0bMNK8YzRkHBbCsYKULyaebm6UnY/pub?embedded=true">Critical Reading and Theories</option>
         </optgroup>
 
         <optgroup label="CPAR">
@@ -38,9 +38,9 @@
             var noteSelector = document.getElementById('noteSelector');
             noteSelector.innerHTML = '';
 
-            if (selectedCategory === ';ot') {
+            if (selectedCategory === 'lit') {
                 noteSelector.innerHTML += '<optgroup label="LIT">';
-                noteSelector.innerHTML += '<option value="">REVIEWER (SOON)</option>';
+                noteSelector.innerHTML += '<option value="https://docs.google.com/document/d/1g3Q3HS0nRw3rADV0bMNK8YzRkHBbCsYKULyaebm6UnY/pub?embedded=true">Critical Reading and Theories</option>';
                 noteSelector.innerHTML += '</optgroup>';
             } else if (selectedCategory === 'cpar') {
                 noteSelector.innerHTML += '<optgroup label="CPAR">';
