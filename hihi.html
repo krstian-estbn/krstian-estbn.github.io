@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hihi 🤭</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+
+<body>
+    <div id="invitation-text"></div>
+    <img id="invitation-image" src="1.png" alt="Invitation Image">
+    <button id='runaway-btn'>No</button>
+    <button id="yes-btn">Yes</button>
+
+</body>
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        user-select: none;
+    }
+
+    body {
+        background-color: rgb(255, 225, 241);
+    }
+
+    #invitation-text {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: clamp(1.2rem, 5vw, 1.2rem);
+        font-family: 'Roboto Mono', monospace;
+        font-weight: bolder;
+        color: #333;
+        text-align: center;
+        width: 90%;
+    }
+
+    #invitation-image {
+        position: absolute;
+        top: 27%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: clamp(220px, 40vw, 250px);
+        height: clamp(220px, 40vw, 250px);
+        object-fit: cover;
+        border: 3px solid #fff;
+        border-radius: 5px;
+    }
+
+    button {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: clamp(2.5rem, 5vw, 3rem);
+        width: clamp(5rem, 10vw, 7.5rem);
+        font-size: clamp(1rem, 3vw, 1rem);
+        font-family: 'Roboto Mono', monospace;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 1px 1px 5px rgb(188, 188, 188);
+        background-color: white;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 1.5s ease;
+    }
+
+    button:active {
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    #yes-btn {
+        left: calc(50% - 100px);
+    }
+
+    #runaway-btn {
+        left: calc(50% + 100px);
+        z-index: 1;
+    }
+
+    .no-hover {
+        pointer-events: none;
+        cursor: default;
+    }
+</style>
+
+<script>
+    class TextScramble {
+        constructor(el) {
+            this.el = el;
+            this.chars = '!<>-_\\/[]{}=+*^?#';
+            this.update = this.update.bind(this);
+        }
+        setText(newText) {
+            const oldText = this.el.innerText;
+            const length = Math.max(oldText.length, newText.length);
+            return new Promise((resolve) => {
+                this.resolve = resolve;
+                this.queue = [];
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 40);
+                    const end = start + Math.floor(Math.random() * 40);
+                    this.queue.push({ from, to, start, end });
+                }
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+            });
+        }
+        update() {
+            let output = '';
+            let complete = 0;
+            for (let i = 0, n = this.queue.length; i < n; i++) {
+                let { from, to, start, end, char } = this.queue[i];
+                if (this.frame >= end) {
+                    complete++;
+                    output += to;
+                } else if (this.frame >= start) {
+                    if (!char || Math.random() < 0.28) {
+                        char = this.randomChar();
+                        this.queue[i].char = char;
+                    }
+                    output += `<span class="dud">${char}</span>`;
+                } else {
+                    output += from;
+                }
+            }
+            this.el.innerHTML = output;
+            if (complete === this.queue.length) {
+                this.resolve();
+            } else {
+                this.frameRequest = requestAnimationFrame(this.update);
+                this.frame++;
+            }
+        }
+        randomChar() {
+            return this.chars[Math.floor(Math.random() * this.chars.length)];
+        }
+    }
+
+    const phrases = [
+        "hellooo :DD",
+        "musta ka??",
+        "whahaha ang random neto",
+        "tinatamad pa ako ayusin entrep hehe :PP",
+        "anyways...",
+        "i know we rarely talk",
+        "and ang awkward ko whenever u're around",
+        "but i would like to ask u",
+        "would u like to go to the ball with me?"
+    ];
+    const images = [
+        "i1.png",
+        "i2.png",
+        "i3.png",
+        "i4.png",
+        "i5.png",
+        "i6.png",
+        "i7.png",
+        "i8.png",
+        "i9.png"
+    ];
+
+    const noPhrases = [
+        "sure ka na?",
+        "sure na sure ka na dyan?",
+        "pwede naman magbago pa isip mo",
+        "pag nag-no ka malulungkot ako :((",
+        "aray ko po",
+        "no na ba talaga?"
+    ];
+    const noImages = [
+        "no1.png",
+        "no2.png",
+        "no3.png",
+        "no4.png",
+        "no5.png",
+        "no6.png",
+    ];
+
+
+    const yesPhrases = [
+        "weh legit ka dyan!?",
+        "wala na kinikilig na ako",
+        "yippee!!"
+    ];
+    const yesImages = [
+        "yes1.png",
+        "yes2.png",
+        "yes3.png"
+    ];
+
+    const invitationText = document.getElementById('invitation-text');
+    const invitationImage = document.getElementById('invitation-image');
+    const yesButton = document.getElementById('yes-btn');
+    const button = document.getElementById("runaway-btn");
+
+    const fx = new TextScramble(invitationText);
+    let currentPhrase = 0;
+    let runawayEnabled = false;
+    let noIndex = 0;
+
+    function nextPhrase() {
+        if (currentPhrase < phrases.length) {
+            invitationImage.src = images[currentPhrase];
+            fx.setText(phrases[currentPhrase]).then(() => {
+                if (currentPhrase === phrases.length - 1) {
+                    setTimeout(() => {
+                        yesButton.style.opacity = 1;
+                        button.style.opacity = 1;
+                        setTimeout(() => {
+                            runawayEnabled = true;
+                        }, 1000);
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        currentPhrase++;
+                        nextPhrase();
+                    }, 2000);
+                }
+            });
+        }
+    }
+    nextPhrase();
+
+    const animateMove = (element, prop, pixels) =>
+        anime({
+            targets: element,
+            [prop]: `${pixels}px`,
+            easing: "easeOutCirc"
+        });
+
+    let isUpdating = false;
+    ["mouseover", "click", "touchstart", "pointerover"].forEach(function (el) {
+        button.addEventListener(el, function (event) {
+            if (runawayEnabled == false || isUpdating) return;
+            isUpdating = true;
+
+            noIndex = (noIndex + 1) % noPhrases.length;
+            fx.setText(noPhrases[noIndex]).then(() => {
+                isUpdating = false;
+            });
+            invitationImage.src = noImages[noIndex];
+
+            const top = getRandomNumber(window.innerHeight - this.offsetHeight);
+            const left = getRandomNumber(window.innerWidth - this.offsetWidth);
+
+            animateMove(this, "left", left).play();
+            animateMove(this, "top", top).play();
+        });
+    });
+
+    const getRandomNumber = (num) => {
+        return Math.floor(Math.random() * (num + 1));
+    };
+
+    yesButton.addEventListener('click', () => {
+        document.getElementById('runaway-btn').classList.add('no-hover');
+        let runawayEnabled = false;
+
+        yesButton.disabled = true;
+        button.disabled = true;
+        button.classList.add('no-hover');
+
+        let yesIndex = 0;
+
+        function showYesSequence() {
+            if (yesIndex < yesPhrases.length) {
+                invitationImage.src = yesImages[yesIndex];
+                fx.setText(yesPhrases[yesIndex]).then(() => {
+                    yesIndex++;
+                    setTimeout(showYesSequence, 2000);
+                });
+            }
+        }
+
+        showYesSequence();
+    });
+
+</script>
+
+</html>
